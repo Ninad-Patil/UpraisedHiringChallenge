@@ -94,15 +94,20 @@ router.get("/", authenticateToken, async (req, res) => {
  *               status:
  *                 type: string
  *                 description: Status of the gadget
+ *                 enum: [ "Available", "Deployed", "Destroyed", "Decommissioned" ]  # Allowed values
  *     responses:
  *       201:
  *         description: Gadget successfully created
+ *       400:
+ *         description: Invalid status provided
  *       500:
  *         description: Failed to create gadget
  */
 router.post("/", authenticateToken, async (req, res) => {
   try {
     const { status } = req.body;
+    if (!validStatuses.includes(status))
+      res.status(500).json({ error: "invalid status" });
     const gadget = await client.gadget.create({
       data: {
         name: generateRandomCodenames(),
@@ -145,15 +150,20 @@ router.post("/", authenticateToken, async (req, res) => {
  *               status:
  *                 type: string
  *                 description: New status for the gadget
+ *                 enum: [ "Available", "Deployed", "Destroyed", "Decommissioned" ]  # Allowed values
  *     responses:
  *       200:
  *         description: Gadget updated successfully
+ *       400:
+ *         description: Invalid status provided
  *       500:
  *         description: Failed to update gadget
  */
 router.patch("/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
   const { name, status } = req.body;
+  if (!validStatuses.includes(status))
+    res.status(500).json({ error: "invalid status" });
   try {
     const gadget = await client.gadget.update({
       where: { id },
@@ -161,7 +171,7 @@ router.patch("/:id", authenticateToken, async (req, res) => {
     });
     res.status(200).json(gadget);
   } catch (error) {
-    res.status(500).json({ error: "Failed to update gadget" });
+    res.status(500).json({ error, customMessage: "Failed to update gadget" });
   }
 });
 

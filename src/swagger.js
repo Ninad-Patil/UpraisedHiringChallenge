@@ -8,7 +8,16 @@ const options = {
     info: {
       title: "IMF Gadgets API",
       version: "1.0.0",
-      description: "API for managing IMF gadgets",
+      description: `API for managing IMF gadgets  
+      
+      **Common Notes**:
+      - select the upraisedhiringchallenge hosted server if not running in localhost  
+      - Signup and then login with the same credintial to get the bearer token
+      - Authorization via Bearer token is required for all endpoints.
+      - Make sure to add only token in Authorize and not 'Bearer adkdd.dd.dd' otherwise you will get jwt malformed error.   
+      - All statuses are case-sensitive.  
+      - For Patch (update gadgets) and Post (create gadgets), only 4 statuses are available: ["Available", "Deployed", "Destroyed", "Decommissioned"].  
+      - Ensure your payload conforms to the expected schema for smooth processing.`,
     },
     servers: [
       {
