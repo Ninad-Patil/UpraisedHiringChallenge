@@ -206,6 +206,8 @@ router.delete("/:id", authenticateToken, async (req, res) => {
  *   post:
  *     summary: Initiate self-destruct sequence for a gadget
  *     tags: [Gadgets]
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
