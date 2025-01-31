@@ -15,6 +15,10 @@ const options = {
         url: "http://localhost:3000",
         description: "Local server",
       },
+      {
+        url: "https://upraisedhiringchallenge-production.up.railway.app",
+        description: "Hosted server",
+      },
     ],
   },
   apis: ["./src/routes/*.js"],
